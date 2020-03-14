@@ -5,7 +5,7 @@
 #include <cmath>
 #include <algorithm>
 #include <utility>
-#include "../../../modules/task_1/sadikov_a_deikstra_algorithm/deikstra_algorithm.h"
+#include "../../../modules/task_2/sadikov_a_deikstra_algorithm/deikstra_algorithm.h"
 
 std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) {
     if (start == end)
