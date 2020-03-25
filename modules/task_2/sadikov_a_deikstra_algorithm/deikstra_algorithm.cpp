@@ -10,6 +10,7 @@
 
 
 std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) {
+    // double t1 = omp_get_wtime();
     if (start == end)
         return std::vector<int>(1, 0);
 
@@ -36,7 +37,7 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
 
         #pragma omp parallel
         {
-            int local_min_point;
+            int local_min_point = max_weight;
             int local_min_len = max_weight;
 
             #pragma omp for
@@ -89,6 +90,8 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
             }
         }
     }
+    // double t2 = omp_get_wtime();
+    // std::cout << t2 - t1 << std::endl;
 
     return way;
 }
