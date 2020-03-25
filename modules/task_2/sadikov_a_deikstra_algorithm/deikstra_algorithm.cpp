@@ -1,5 +1,5 @@
 // Copyright 2020 Sadikov Artem
-#include <omp>
+#include <omp.h>
 #include <vector>
 #include <queue>
 #include <limits>
