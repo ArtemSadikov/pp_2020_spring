@@ -1,4 +1,5 @@
 // Copyright 2020 Sadikov Artem
+#include "../../../modules/task_3/sadikov_a_deikstra_algorithm/deikstra_algorithm.h"
 #include <tbb/tbb.h>
 #include <vector>
 #include <queue>
@@ -9,7 +10,6 @@
 #include <random>
 #include <ctime>
 #include <iostream>
-#include "../../../modules/task_3/sadikov_a_deikstra_algorithm/deikstra_algorithm.h"
 
 std::vector<int> getRandGraph(int size) {
     std::vector<int> graph(size * size, 0);
