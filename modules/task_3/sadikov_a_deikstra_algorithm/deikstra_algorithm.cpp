@@ -1,11 +1,11 @@
 // Copyright 2020 Sadikov Artem
+#include <tbb/tbb.h>
 #include <vector>
 #include <queue>
 #include <limits>
 #include <cmath>
 #include <algorithm>
 #include <utility>
-#include <tbb/tbb.h>
 #include <random>
 #include <ctime>
 #include <iostream>
@@ -90,13 +90,13 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
                 for (int i = v.begin(); i < v.end(); i++) {
                     if (graph[end * points_count + i] > 0) {
                         temp = weight - graph[end * points_count + i];
+                        mutex.lock();
                         if (points_len[i] == temp) {
-                            mutex.lock();
                             weight = temp;
                             end = i;
                             way.push_back(i + 1);
-                            mutex.unlock();
                         }
+                        mutex.unlock();
                     }
                 }
             });
