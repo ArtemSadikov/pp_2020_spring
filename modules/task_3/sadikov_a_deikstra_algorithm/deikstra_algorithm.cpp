@@ -93,9 +93,9 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
                         if (points_len[i] == temp) {
                             weight = temp;
                             end = i;
-                            mutex.lock();
+                            // mutex.lock();
                             way.push_back(i + 1);
-                            mutex.unlock();
+                            // mutex.unlock();
                         }
                     }
                 }
