@@ -5,7 +5,23 @@
 #include <cmath>
 #include <algorithm>
 #include <utility>
+#include <random>
+#include <ctime>
 #include "../../../modules/task_1/sadikov_a_deikstra_algorithm/deikstra_algorithm.h"
+
+std::vector<int> getRandGraph(int size) {
+    std::vector<int> graph(size * size, 0);
+    std::mt19937 gen;
+    gen.seed(static_cast<unsigned int>(time(0)));
+
+    for (int i = 0; i < size; i++) {
+        for (int j = i + 1; j < size; j++) {
+            graph[i * size + j] = graph[j * size + i] = gen() % 100;
+        }
+    }
+
+    return graph;
+}
 
 std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) {
     if (start == end)
