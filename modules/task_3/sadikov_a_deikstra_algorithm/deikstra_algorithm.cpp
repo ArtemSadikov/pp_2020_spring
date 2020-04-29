@@ -88,16 +88,16 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
             tbb::blocked_range<int>(0, points_count),
             [&](const tbb::blocked_range<int>& v) {
                 for (int i = v.begin(); i < v.end(); i++) {
+                    mutex.lock();
                     if (graph[end * points_count + i] > 0) {
                         temp = weight - graph[end * points_count + i];
-                        mutex.lock();
                         if (points_len[i] == temp) {
                             weight = temp;
                             end = i;
                             way.push_back(i + 1);
                         }
-                        mutex.unlock();
                     }
+                    mutex.unlock();
                 }
             });
     }
