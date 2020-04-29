@@ -11,7 +11,7 @@
 //    ASSERT_EQ(1, 1);
 // }
 
-TEST(Deikstra_Algorithm_TBB, Test_On_Six_Points_Graph) {
+TEST(DISAPLED_Deikstra_Algorithm_TBB, Test_On_Six_Points_Graph) {
     std::vector<int> g = {0, 7, 9, 0, 0, 14,
                           7, 0, 10, 15, 0, 0,
                           9, 10, 0, 11, 0, 2,
