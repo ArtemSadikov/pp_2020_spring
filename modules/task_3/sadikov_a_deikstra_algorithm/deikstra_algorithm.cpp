@@ -68,8 +68,7 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
                     return x;
                 }
                 return y;
-            }
-        );
+            });
 
         min_point = min_vals[1];
         min = min_vals[0];
