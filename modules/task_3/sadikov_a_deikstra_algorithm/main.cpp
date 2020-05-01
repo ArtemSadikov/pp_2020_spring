@@ -33,7 +33,7 @@ TEST(Deikstra_Algorithm_TBB, Test_On_Three_Points) {
     EXPECT_EQ(getMinRange(g, 1, 3), res);
 }
 
-TEST(DISABLED_Deikstra_Algorithm_TBB, Test_On_Wrong_Arguments) {
+TEST(Deikstra_Algorithm_TBB, Test_On_Wrong_Arguments) {
     std::vector<int> g = {0, 7, 9, 0, 0, 14,
                           7, 0, 10, 15, 0, 0,
                           9, 10, 0, 11, 0, 2,
