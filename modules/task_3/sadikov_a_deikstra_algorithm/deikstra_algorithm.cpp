@@ -51,22 +51,22 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
         min_point = max_weight;
         min = max_weight;
 
-        tbb::parallel_for(
-            tbb::blocked_range<int>(0, points_count),
-            [&](const tbb::blocked_range<int>& v) {
-                for (int i = v.begin(); i < v.end(); i++) {
+        // tbb::parallel_for(
+        //     tbb::blocked_range<int>(0, points_count),
+        //     [&](const tbb::blocked_range<int>& v) {
+                for (int i = 0; i < points_count; i++) {
                     if (!visisted[i] && points_len[i] < min) {
                         min_point = i;
                         min = points_len[i];
                     }
                 }
-            });
+            // });
 
         if (min_point != max_weight) {
-            tbb::parallel_for(
-                tbb::blocked_range<int>(0, points_count),
-                [&](const tbb::blocked_range<int>& v) {
-                    for (int i = v.begin(); i < v.end(); i++) {
+            // tbb::parallel_for(
+            //     tbb::blocked_range<int>(0, points_count),
+            //     [&](const tbb::blocked_range<int>& v) {
+                    for (int i = 0; i < points_count; i++) {
                         if (graph[min_point * points_count + i] > 0) {
                             temp = min + graph[min_point * points_count + i];
                             if (points_len[i] > temp) {
@@ -74,7 +74,7 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
                             }
                         }
                     }
-                });
+                // });
             visisted[min_point] = true;
         }
     } while (min_point < max_weight);
