@@ -11,7 +11,7 @@
 #include <ctime>
 #include <iostream>
 
-#define THREADS 5
+#define THREADS 4
 
 std::vector<int> getRandGraph(int size) {
     std::vector<int> graph(size * size, 0);
@@ -53,17 +53,31 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
         min_point = max_weight;
         min = max_weight;
 
+        tbb::parallel_reduce(
+            tbb::blocked_range<int>(0, points_count),
+            min,
+            [&](const tbb::blocked_range<int>& v, int local_min) -> int {
+                for (int i = v.begin(); i < v.end(); i++) {
+                    if (!visisted[i] && points_len[i] < min) {
+                        min = points_len[i];
+                    }
+                }
+                return local_min;
+            },
+            [](int x, int y) -> int {
+                return min(x, y);
+            });
+
         tbb::parallel_for(
             tbb::blocked_range<int>(0, points_count),
             [&](const tbb::blocked_range<int>& v) {
                 for (int i = v.begin(); i < v.end(); i++) {
-                    if (!visisted[i] && points_len[i] < min) {
+                    if (points_len[i] == min) {
                         min_point = i;
-                        min = points_len[i];
+                        break;
                     }
                 }
             });
-
         if (min_point != max_weight) {
             tbb::parallel_for(
                 tbb::blocked_range<int>(0, points_count),
