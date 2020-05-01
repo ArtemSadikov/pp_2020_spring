@@ -11,6 +11,8 @@
 #include <ctime>
 #include <iostream>
 
+#define THREADS 5
+
 std::vector<int> getRandGraph(int size) {
     std::vector<int> graph(size * size, 0);
     std::mt19937 gen;
@@ -36,8 +38,8 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
     int points_count = sqrt(graph.size());
     int max_weight = INT8_MAX;
     int min, min_point, temp;
-    // tbb::mutex mutex;
-    // tbb::task_scheduler_init::automatic;*/
+    tbb::mutex mutex;
+    tbb::task_scheduler_init(THREADS);
     std::vector<int> points_len(points_count, max_weight);
     std::vector<int> way;
     std::vector<bool> visisted(points_count, false);
@@ -51,22 +53,22 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
         min_point = max_weight;
         min = max_weight;
 
-        // tbb::parallel_for(
-        //     tbb::blocked_range<int>(0, points_count),
-        //     [&](const tbb::blocked_range<int>& v) {
-                for (int i = 0; i < points_count; i++) {
+        tbb::parallel_for(
+            tbb::blocked_range<int>(0, points_count),
+            [&](const tbb::blocked_range<int>& v) {
+                for (int i = v.begin(); i < v.end(); i++) {
                     if (!visisted[i] && points_len[i] < min) {
                         min_point = i;
                         min = points_len[i];
                     }
                 }
-            // });
+            });
 
         if (min_point != max_weight) {
-            // tbb::parallel_for(
-            //     tbb::blocked_range<int>(0, points_count),
-            //     [&](const tbb::blocked_range<int>& v) {
-                    for (int i = 0; i < points_count; i++) {
+            tbb::parallel_for(
+                tbb::blocked_range<int>(0, points_count),
+                [&](const tbb::blocked_range<int>& v) {
+                    for (int i = v.begin(); i < v.end(); i++) {
                         if (graph[min_point * points_count + i] > 0) {
                             temp = min + graph[min_point * points_count + i];
                             if (points_len[i] > temp) {
@@ -74,7 +76,7 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
                             }
                         }
                     }
-                // });
+                });
             visisted[min_point] = true;
         }
     } while (min_point < max_weight);
@@ -93,7 +95,10 @@ std::vector<int> getMinRange(const std::vector<int>& graph, int start, int end) 
                         if (points_len[i] == temp) {
                             weight = temp;
                             end = i;
+                            mutex.lock();
+                            std::cout << 1212 << std::endl;
                             way.push_back(i + 1);
+                            mutex.unlock();
                         }
                     }
                 }
