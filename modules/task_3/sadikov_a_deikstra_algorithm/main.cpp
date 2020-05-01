@@ -19,9 +19,9 @@ TEST(Deikstra_Algorithm_TBB, Test_On_Six_Points_Graph) {
                           0, 0, 0, 6, 0, 9,
                           14, 0, 2, 0, 9, 0};
 
-    std::vector<int> res = {5, 6, 3, 1};
+    std::vector<int> res = {6, 3, 1};
 
-    EXPECT_EQ(getMinRange(g, 1, 5), res);
+    EXPECT_EQ(getMinRange(g, 1, 6), res);
 }
 
 TEST(Deikstra_Algorithm_TBB, Test_On_Three_Points) {
